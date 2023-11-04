@@ -3,6 +3,7 @@ from adisconfig import adisconfig
 from pymongo import MongoClient
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials
 from json import loads
+from uuid import uuid4
 
 class log_worker:
 	mongo_cli=None
@@ -42,8 +43,12 @@ class log_worker:
 			)
 
 	def _callback(self, channel, method, properties, body):
+		
 		msg=body.decode('utf-8')
 		msg=loads(msg)
+
+		log_item_uuid=str(uuid4())
+		msg['log_item_uuid']=log_item_uuid
 
 		self._mongo_collection.insert_one(msg)
 
