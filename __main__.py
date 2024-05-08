@@ -1,4 +1,4 @@
-from adisconfig import adisconfig
+from adistools.adisconfig import adisconfig
 
 from pymongo import MongoClient
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials
